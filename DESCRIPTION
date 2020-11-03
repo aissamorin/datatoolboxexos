@@ -1,0 +1,15 @@
+Package: datatoolboxexos
+Title: Data and Code for the CESAB Datatoolbox Exercises
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Aissa",
+           family = "Morin",
+           role = c("aut", "cre"),
+           email = "aissa.morin@univ-lyon1.fr")
+Description: Provide Data and Code for the CESAB Datatoolbox Exercises
+License: MIT + file LICENSE
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
