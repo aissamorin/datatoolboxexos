@@ -46,3 +46,43 @@ hist(mam_per_eco,
 )
 
 ```
+
+### Importation des données 
+
+```{r Importation}
+
+sp_eco <- datatoolboxexos::data_mammals_ecoregions()
+sp <- datatoolboxexos::data_mammals()
+eco_reg <- datatoolboxexos::data_ecoregion()
+
+```
+
+_Dans combien de royaumes, biomes et écorégions différents retrouve-t-on chacune des 7 espèces d'Ursidés ?_
+
+```{r}
+library(tidyverse)
+
+sp_ursus_list <-sp %>%
+  filter(family == "Ursidae") %>% # selectionne les espèces d'ursidés
+  filter(!str_detect(sci_name,'Ursus malayanus')) # remove Ursus malayanus
+  
+sp_ursus_sp_eco <- left_join(sp_ursus_list,sp_eco, by ="species_id" )  # jointure tables wildfinder-ursus_list et wildfinder-ecoregions_species
+
+ursus_table <- left_join(sp_ursus_sp_eco, eco_reg, by = "ecoregion_id" ) #jointure  à wildfinder-ecoregions_list
+
+ursus_table %>% 
+  group_by(common, sci_name)%>%
+  summarize(nb_realm =  n_distinct(realm),
+            nb_biome = n_distinct(biome),
+            nb_eco_reg = n_distinct(ecoregion_id)) %>%
+  arrange(desc(nb_eco_reg))
+  
+
+```
+
+_Correction_
+
+
+
+
+

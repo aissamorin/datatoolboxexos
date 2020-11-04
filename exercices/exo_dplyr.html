@@ -11,7 +11,7 @@
 
 <meta name="author" content="Aissa Morin" />
 
-<meta name="date" content="2020-11-03" />
+<meta name="date" content="2020-11-04" />
 
 <title>Manipulation de données avec {dplyr}</title>
 
@@ -413,7 +413,7 @@ summary {
 
 <h1 class="title toc-ignore">Manipulation de données avec {dplyr}</h1>
 <h4 class="author">Aissa Morin</h4>
-<h4 class="date">2020-11-03</h4>
+<h4 class="date">2020-11-04</h4>
 
 </div>
 
@@ -455,6 +455,72 @@ hist(mam_per_eco,
      breaks = 50
 )</code></pre>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
+<div id="importation-des-données" class="section level3">
+<h3>Importation des données</h3>
+<pre class="r"><code>sp_eco &lt;- datatoolboxexos::data_mammals_ecoregions()</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ecoregion_id = col_character(),
+##   species_id = col_double()
+## )</code></pre>
+<pre class="r"><code>sp &lt;- datatoolboxexos::data_mammals()</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   species_id = col_double(),
+##   class = col_character(),
+##   order = col_character(),
+##   family = col_character(),
+##   genus = col_character(),
+##   species = col_character(),
+##   common = col_character(),
+##   sci_name = col_character()
+## )</code></pre>
+<pre class="r"><code>eco_reg &lt;- datatoolboxexos::data_ecoregion()</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ecoregion_id = col_character(),
+##   ecoregion = col_character(),
+##   realm = col_character(),
+##   biome = col_character()
+## )</code></pre>
+<p><em>Dans combien de royaumes, biomes et écorégions différents retrouve-t-on chacune des 7 espèces d’Ursidés ?</em></p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages ----------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.3     v dplyr   1.0.1
+## v tidyr   1.1.1     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts -------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>sp_ursus_list &lt;-sp %&gt;%
+  filter(family == &quot;Ursidae&quot;) %&gt;% # selectionne les espèces d&#39;ursidés
+  filter(!str_detect(sci_name,&#39;Ursus malayanus&#39;)) # remove Ursus malayanus
+  
+sp_ursus_sp_eco &lt;- left_join(sp_ursus_list,sp_eco, by =&quot;species_id&quot; )  # jointure tables wildfinder-ursus_list et wildfinder-ecoregions_species
+
+ursus_table &lt;- left_join(sp_ursus_sp_eco, eco_reg, by = &quot;ecoregion_id&quot; ) #jointure  à wildfinder-ecoregions_list
+
+ursus_table %&gt;% 
+  group_by(common, sci_name)%&gt;%
+  summarize(nb_realm =  n_distinct(realm),
+            nb_biome = n_distinct(biome),
+            nb_eco_reg = n_distinct(ecoregion_id)) %&gt;%
+  arrange(desc(nb_eco_reg))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;common&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 7 x 5
+## # Groups:   common [7]
+##   common              sci_name               nb_realm nb_biome nb_eco_reg
+##   &lt;chr&gt;               &lt;chr&gt;                     &lt;int&gt;    &lt;int&gt;      &lt;int&gt;
+## 1 Brown Bear          Ursus arctos                  3       11        139
+## 2 American Black Bear Ursus americanus              3       10         82
+## 3 Asiatic Black Bear  Ursus thibetanus              3       11         79
+## 4 Sun Bear            Helarctos malayanus           2        5         39
+## 5 Spectacled Bear     Tremarctos ornatus            1        3         23
+## 6 Sloth Bear          Melursus ursinus              1        6         21
+## 7 Giant Panda         Ailuropoda melanoleuca        1        4          6</code></pre>
+<p><em>Correction</em></p>
+</div>
 </div>
 </div>
 
