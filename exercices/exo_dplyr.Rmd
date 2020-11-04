@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ```
 
 # Introduction
@@ -60,11 +60,11 @@ eco_reg <- datatoolboxexos::data_ecoregion()
 _Dans combien de royaumes, biomes et écorégions différents retrouve-t-on chacune des 7 espèces d'Ursidés ?_
 
 ```{r}
-library(tidyverse)
+require(tidyverse)
 
 sp_ursus_list <-sp %>%
-  filter(family == "Ursidae") %>% # selectionne les espèces d'ursidés
-  filter(!str_detect(sci_name,'Ursus malayanus')) # remove Ursus malayanus
+  dplyr::filter(family == "Ursidae") %>% # selectionne les espèces d'ursidés
+  dplyr::filter(!str_detect(sci_name,'Ursus malayanus')) # remove Ursus malayanus
   
 sp_ursus_sp_eco <- left_join(sp_ursus_list,sp_eco, by ="species_id" )  # jointure tables wildfinder-ursus_list et wildfinder-ecoregions_species
 
@@ -82,6 +82,42 @@ ursus_table %>%
 
 _Correction_
 
+```{r}
+ursus <- sp %>%
+  filter(family   == "Ursidae") %>%                       # Sélection des Ursidés
+  filter(sci_name != "Ursus malayanus") %>%             # Suppression du synonyme
+  select(species_id, sci_name, common)                    # Sélection de colonnes
+
+ursus_eco <- ursus %>%
+  left_join(sp_eco)
+
+## Seconde jointure
+ursus_eco <- ursus_eco %>%
+  left_join(eco_reg, by = "ecoregion_id")
+
+## Nombre de royaumes où chaque espèce est retrouvée
+realm_ursus <- ursus_eco %>%
+  group_by(sci_name) %>%
+  summarise(n_realms     = n_distinct(realm))
+
+## Nombre de biomes où chaque espèce est retrouvée
+biome_ursus <- ursus_eco %>%
+  group_by(sci_name) %>%
+  summarise(n_biomes     = n_distinct(biome))
+
+## Nombre d'écorégions où chaque espèce est retrouvée
+eco_ursus <- ursus_eco %>%
+  group_by(sci_name) %>%
+  summarise(n_ecoregions = n_distinct(ecoregion))
+
+## Combinons toutes les informations
+realm_ursus %>%
+  left_join(biome_ursus, by = "sci_name") %>%
+  left_join(eco_ursus, by = "sci_name") %>%
+  left_join(ursus, by = "sci_name") %>%
+  select(sci_name, common, n_realms, n_biomes, n_ecoregions) %>%
+  arrange(desc(n_ecoregions))
+```
 
 
 
