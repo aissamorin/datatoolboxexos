@@ -1,0 +1,40 @@
+---
+title: "Report analysis ursidae"
+author: "Aïssa Morin"
+date: "`r Sys.Date()`"
+bibliography: "bibliography.bib"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
+```
+
+## Introduction
+
+Bears are in declin [@cowan1972].
+     
+Here, we investigate the spread and the longevity of bears.  
+
+## Methods  
+We used pantheria and wildfinder.   
+
+## Results   
+
+We made some plots. 
+```{r , echo=FALSE, fig.cap= "Figure 1. Number of ecoregions per species"}
+drake::readd(fig1)
+```
+
+```{r , echo=FALSE, , fig.cap= "Figure 2. Gestation"}
+drake::readd(fig2)
+```
+
+```{r , echo=FALSE, eval = FALSE, fig.cap= "Figure 3. World map"}
+drake::readd(fig3)
+```
+# Discussion 
+We reveal that bears are the best.
+
+# Bibliography
