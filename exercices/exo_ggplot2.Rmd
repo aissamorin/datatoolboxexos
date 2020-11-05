@@ -1,0 +1,140 @@
+---
+title: '"Visualisation avec ggplot"'
+author: "Aissa Morin"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE)
+```
+
+# Introduction
+
+Dans cet exercice nous allons utiliser le package `ggplot2` pour visualiser des données 
+
+# Données
+
+On va utiliser les données de la base de données PanTHERIA
+
+# Exercice
+
+```{r}
+library(tidyverse)
+```
+
+##Lecture des données
+
+```{r, echo = FALSE, eval = FALSE}
+#pantheria <- readr::read_delim("../data/pantheria-traits/PanTHERIA_1-0_WR05_Aug2008.txt", delim = "\t")
+# Ou
+# readr::read_delim("https://raw.githubusercontent.com/FRBCesab/datatoolbox/master/data/PanTHERIA_1-0_WR05_Aug2008.txt", delim = "\t")
+
+# pantheria <- readr::read_delim(here::here("data","pantheria-traits", "PanTHERIA_1-0_WR05_Aug2008.txt"), delim = "\t")
+```
+
+__Nettoyage des données avec une fonction__
+
+```{r}
+pantheria  <- data_pantheria()# fichier data_pantheria.R
+```
+
+## Tidy the dataset 
+
+Nettoyage des données
+```{r, echo = FALSE, eval = FALSE}
+
+# dat <- pantheria %>%
+  # mutate(order = forcats::as_factor(MSW05_Order),
+  #        family = forcats::as_factor(MSW05_Family)) %>%
+  # rename( adult_bodymass  = '5-1_AdultBodyMass_g',
+  #         dispersal_age  = '7-1_DispersalAge_d',
+  #         gestation = '9-1_GestationLen_d',
+  #         homerange = '22-2_HomeRange_Indiv_km2',
+  #         litter_size = '16-1_LittersPerYear',
+  #         longevity = '17-1_MaxLongevity_m') %>%
+  # select(order, family, adult_bodymass, dispersal_age, gestation,homerange,litter_size,longevity ) %>%
+  # na_if(-999 )
+  # 
+  # dat
+  
+```
+
+__Nettoyage des données avec une fonction__
+
+```{r}
+dat  <- clean_pantheria(pantheria) #fichier wriggle.R
+```
+
+
+## Data Exploration 
+
+How many observation in family ? in order ?
+```{r}
+
+dat %>% 
+  count(order)
+
+dat %>% 
+  count(family)
+  
+dat %>%
+  filter(!is.na(homerange))%>%
+  group_by(family)%>%
+  summarise(m = mean(homerange), sd =  sd(homerange, n = n()))
+
+```
+
+## Graph 1: Bar chart of the number of entries per family
+
+```{r}
+
+dat %>%
+  group_by(family) %>% 
+  mutate(n = n()) %>% 
+  filter(n > 100) %>%
+  
+  ggplot()+
+  geom_col()+
+  aes(forcats::fct_reorder(family, n), x = n) +
+  xlab("Family") +
+  ylab("Counts") +
+  ggtitle("Number of entries per family")
+
+  
+
+```
+
+## Graph 2: Scatter plot of litter size as a function of longevity
+
+```{r}
+
+theme_set(theme_bw()) # play around with theme
+dat %>%
+  filter(!is.na(litter_size), !is.na(longevity)) %>% #Filter out missing values in both litter size and longevity
+  group_by(family) %>% # group by family
+  mutate(n = n()) %>% # count the number of entries per family
+  mutate(longevity = longevity / 12) %>% # Change month to year
+  filter(n > 10) %>% # select only those families with more than 10 entries
+  ggplot() +
+  aes(x = longevity, y = litter_size, col = family) + # scatter plot
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) + # se = TRUE to add confidence intervals
+  xlab("Longevity") + # add label for X axis
+  ylab("Litter size") + # add label for Y axis
+  ggtitle("Scatterplot") + # add title
+  facet_wrap(~ family, nrow = 3) # split in several panels,
+                                 # one for each family
+                                 # remove scale = 'free' for
+                                 # same scale for all plots
+
+```
+
+
+
+
